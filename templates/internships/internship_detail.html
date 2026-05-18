@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail offre{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mb-3">
+            <div>
+                <h1 class="h3 mb-1">{{ offer.title }}</h1>
+                <p class="text-muted mb-0">{{ offer.domain }} - {{ offer.location }}</p>
+            </div>
+            <div>
+                {% if offer.status == 'open' %}
+                    <span class="badge status-badge bg-success">Ouverte</span>
+                {% else %}
+                    <span class="badge status-badge bg-secondary">Ferm&eacute;e</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mb-3">
+            <span class="badge text-bg-light border">{{ offer.get_internship_type_display }}</span>
+            <span class="badge text-bg-light border">{{ offer.duration }}</span>
+        </div>
+        <p><strong>Description :</strong></p>
+        <p>{{ offer.description|linebreaksbr }}</p>
+        <p><strong>Competences requises :</strong></p>
+        <p>{{ offer.required_skills|linebreaksbr }}</p>
+        <p><strong>Duree :</strong> {{ offer.duration }}</p>
+        <p><strong>Date limite :</strong> {{ offer.deadline }}</p>
+
+        {% if user.profile.role == 'student' and offer.status == 'open' %}
+            <a class="btn btn-primary" href="{% url 'apply_for_internship' offer.pk %}">Postuler</a>
+            <a class="btn btn-outline-secondary" href="{% url 'student_internship_list' %}">Retour</a>
+        {% elif user.profile.role == 'company' %}
+            <a class="btn btn-outline-secondary" href="{% url 'company_internship_list' %}">Retour</a>
+            <a class="btn btn-primary" href="{% url 'update_internship_company' offer.pk %}">Modifier</a>
+            <a class="btn btn-outline-success" href="{% url 'company_internship_applications' offer.pk %}">Candidatures</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil etudiant{% endblock %}
+
+{% block content %}
+<div class="jango-card overflow-hidden">
+    <div class="profile-cover"></div>
+    <div class="card-body px-4 px-md-5 pb-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+                <div class="profile-avatar">{{ profile.full_name|default:user.username|first|upper }}</div>
+                <h1 class="h2 mt-3 mb-1">{{ profile.full_name|default:user.username }}</h1>
+                <p class="profile-meta mb-1">Candidat ouvert aux opportunites</p>
+                <p class="profile-meta mb-0">{{ profile.field|default:'Localisation non specifiee' }} &nbsp; {{ profile.phone|default:'Numero non fourni' }}</p>
+            </div>
+            <div class="pt-md-4">
+                <a class="btn btn-outline-primary" href="{% url 'student_profile_edit' %}">Modifier</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info-card mt-4">
+    <h2 class="h4 mb-3">Competences</h2>
+    <p class="mb-0">{{ profile.skills|linebreaksbr|default:'Aucune competence renseignee.' }}</p>
+</div>
+
+<div class="info-card mt-4">
+    <h2 class="h4 mb-3">Formation</h2>
+    <p class="mb-1"><strong>Niveau :</strong> {{ profile.study_level|default:'Non renseigne' }}</p>
+    <p class="mb-0"><strong>Filiere :</strong> {{ profile.field|default:'Non renseignee' }}</p>
+    {% if profile.cv %}
+        <a class="btn btn-primary mt-3" href="{{ profile.cv.url }}" target="_blank">Voir le CV</a>
+    {% endif %}
+</div>
+{% endblock %}

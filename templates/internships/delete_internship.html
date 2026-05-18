@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Supprimer offre{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-danger">
+    <div class="card-body">
+        <h1 class="h4">Supprimer l'offre</h1>
+        <p>Voulez-vous vraiment supprimer l'offre <strong>{{ offer.title }}</strong> ?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+            <a class="btn btn-outline-secondary" href="{% url 'company_internship_list' %}">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

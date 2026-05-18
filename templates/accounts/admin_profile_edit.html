@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier profil{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Modifier profil</h1>
+        <p class="text-muted mb-0">{{ profile.user.username }}</p>
+    </div>
+    <a class="btn btn-outline-secondary mt-3 mt-md-0" href="{% url 'admin_profiles_list' %}">Retour</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="role">Role</label>
+                    <select class="form-select" id="role" name="role">
+                        <option value="student" {% if profile.role == 'student' %}selected{% endif %}>Etudiant</option>
+                        <option value="company" {% if profile.role == 'company' %}selected{% endif %}>Entreprise</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="full_name">Nom complet</label>
+                    <input class="form-control" id="full_name" name="full_name" value="{{ profile.full_name }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="phone">Telephone</label>
+                    <input class="form-control" id="phone" name="phone" value="{{ profile.phone }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="field">Filiere</label>
+                    <input class="form-control" id="field" name="field" value="{{ profile.field }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="study_level">Niveau</label>
+                    <input class="form-control" id="study_level" name="study_level" value="{{ profile.study_level }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="cv">CV</label>
+                    <input class="form-control" id="cv" type="file" name="cv">
+                    {% if profile.cv %}
+                        <div class="form-text"><a href="{{ profile.cv.url }}" target="_blank">CV actuel</a></div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="skills">Competences</label>
+                    <textarea class="form-control" id="skills" name="skills" rows="4">{{ profile.skills }}</textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="company_name">Nom entreprise</label>
+                    <input class="form-control" id="company_name" name="company_name" value="{{ profile.company_name }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="sector">Secteur</label>
+                    <input class="form-control" id="sector" name="sector" value="{{ profile.sector }}">
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="address">Adresse</label>
+                    <input class="form-control" id="address" name="address" value="{{ profile.address }}">
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4">{{ profile.description }}</textarea>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                <a class="btn btn-outline-secondary" href="{% url 'admin_profiles_list' %}">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

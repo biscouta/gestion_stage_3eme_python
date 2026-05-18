@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes candidatures{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <h1 class="h3 mb-1">Mes candidatures</h1>
+    <p class="text-muted mb-0">Suivez l'etat de vos candidatures.</p>
+</div>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Offre</th>
+                        <th>Entreprise</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>CV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                        <tr>
+                            <td>{{ application.offer.title }}</td>
+                            <td>{{ application.offer.company.profile.company_name|default:application.offer.company.username }}</td>
+                            <td>{{ application.created_at|date:'d/m/Y H:i' }}</td>
+                            <td>
+                                {% if application.status == 'accepted' %}
+                                    <span class="badge status-badge bg-success">Accept&eacute;e</span>
+                                {% elif application.status == 'rejected' %}
+                                    <span class="badge status-badge bg-danger">Refus&eacute;e</span>
+                                {% else %}
+                                    <span class="badge status-badge bg-warning text-dark">En attente</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if application.cv %}
+                                    <a href="{{ application.cv.url }}" target="_blank">Voir</a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Aucune candidature envoyee.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

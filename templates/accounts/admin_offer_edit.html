@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier offre{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Modifier offre</h1>
+        <p class="text-muted mb-0">{{ offer.title }}</p>
+    </div>
+    <a class="btn btn-outline-secondary mt-3 mt-md-0" href="{% url 'admin_offers_list' %}">Retour</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="company">Entreprise</label>
+                    <select class="form-select" id="company" name="company" required>
+                        {% for company in companies %}
+                            <option value="{{ company.pk }}" {% if company.pk == offer.company.pk %}selected{% endif %}>
+                                {{ company.profile.company_name|default:company.username }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="title">Titre</label>
+                    <input class="form-control" id="title" name="title" value="{{ offer.title }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="domain">Domaine</label>
+                    <input class="form-control" id="domain" name="domain" value="{{ offer.domain }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="location">Lieu</label>
+                    <input class="form-control" id="location" name="location" value="{{ offer.location }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="duration">Duree</label>
+                    <input class="form-control" id="duration" name="duration" value="{{ offer.duration }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="internship_type">Type</label>
+                    <select class="form-select" id="internship_type" name="internship_type">
+                        <option value="presentiel" {% if offer.internship_type == 'presentiel' %}selected{% endif %}>Presentiel</option>
+                        <option value="remote" {% if offer.internship_type == 'remote' %}selected{% endif %}>Remote</option>
+                        <option value="hybride" {% if offer.internship_type == 'hybride' %}selected{% endif %}>Hybride</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="status">Statut</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="open" {% if offer.status == 'open' %}selected{% endif %}>Ouverte</option>
+                        <option value="closed" {% if offer.status == 'closed' %}selected{% endif %}>Fermee</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="deadline">Date limite</label>
+                    <input class="form-control" id="deadline" type="date" name="deadline" value="{{ offer.deadline|date:'Y-m-d' }}" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="5" required>{{ offer.description }}</textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="required_skills">Competences requises</label>
+                    <textarea class="form-control" id="required_skills" name="required_skills" rows="4" required>{{ offer.required_skills }}</textarea>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                <a class="btn btn-outline-secondary" href="{% url 'admin_offers_list' %}">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

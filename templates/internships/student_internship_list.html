@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Offres de stage{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Offres de stage</h1>
+        <p class="text-muted mb-0">Trouvez une offre ouverte et envoyez votre candidature.</p>
+    </div>
+</div>
+
+<form class="row g-2 mb-4" method="get">
+    <div class="col-md-10">
+        <input class="form-control" type="text" name="q" value="{{ query }}" placeholder="Rechercher par titre, domaine, lieu ou competences">
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100" type="submit">Rechercher</button>
+    </div>
+</form>
+
+<div class="row g-3">
+    {% for offer in offers %}
+        <div class="col-md-6 col-xl-4">
+            <div class="card offer-card h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between gap-2 mb-2">
+                        <h2 class="h5 mb-0">{{ offer.title }}</h2>
+                        {% if offer.status == 'open' %}
+                            <span class="badge status-badge bg-success">Ouverte</span>
+                        {% else %}
+                            <span class="badge status-badge bg-secondary">Ferm&eacute;e</span>
+                        {% endif %}
+                    </div>
+                    <p class="text-muted small mb-2">{{ offer.domain }} - {{ offer.location }}</p>
+                    <p class="mb-3">{{ offer.description|truncatewords:24 }}</p>
+                    <span class="badge text-bg-light border">{{ offer.get_internship_type_display }}</span>
+                    <span class="badge text-bg-light border">{{ offer.duration }}</span>
+                </div>
+                <div class="card-footer bg-white d-flex gap-2">
+                    <a class="btn btn-primary btn-sm" href="{% url 'company_internship_detail' offer.pk %}">Details</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'apply_for_internship' offer.pk %}">Postuler</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Aucune offre ouverte pour le moment.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

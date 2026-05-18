@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Offre de stage{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="h4 mb-4">{% if offer %}Modifier l'offre{% else %}Creer une offre{% endif %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Titre</label>
+                    <input class="form-control" type="text" name="title" value="{{ offer.title|default:'' }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Domaine</label>
+                    <input class="form-control" type="text" name="domain" value="{{ offer.domain|default:'' }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Duree</label>
+                    <input class="form-control" type="text" name="duration" value="{{ offer.duration|default:'' }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Lieu</label>
+                    <input class="form-control" type="text" name="location" value="{{ offer.location|default:'' }}" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Type</label>
+                    <select class="form-select" name="internship_type">
+                        <option value="presentiel" {% if offer.internship_type == 'presentiel' %}selected{% endif %}>Presentiel</option>
+                        <option value="remote" {% if offer.internship_type == 'remote' %}selected{% endif %}>Remote</option>
+                        <option value="hybride" {% if offer.internship_type == 'hybride' %}selected{% endif %}>Hybride</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Statut</label>
+                    <select class="form-select" name="status">
+                        <option value="open" {% if offer.status == 'open' %}selected{% endif %}>Ouverte</option>
+                        <option value="closed" {% if offer.status == 'closed' %}selected{% endif %}>Fermee</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Date limite</label>
+                    <input class="form-control" type="date" name="deadline" value="{{ offer.deadline|date:'Y-m-d' }}" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="description" rows="4" required>{{ offer.description|default:'' }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Competences requises</label>
+                <textarea class="form-control" name="required_skills" rows="3" required>{{ offer.required_skills|default:'' }}</textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <a class="btn btn-outline-secondary" href="{% url 'company_internship_list' %}">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

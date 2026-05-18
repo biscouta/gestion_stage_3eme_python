@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="jango-card auth-shell">
+    <section class="auth-brand">
+        <div class="auth-brand-content">
+            <div class="auth-logo">
+                <span class="auth-logo-mark">M</span>
+                <div>
+                    <div class="auth-logo-text">My Stage</div>
+                    <div class="auth-tagline">Stages. Talents. Opportunites.</div>
+                </div>
+            </div>
+            <p class="auth-copy mb-0">Connectez-vous pour gerer vos offres, vos candidatures et developper votre carriere.</p>
+        </div>
+    </section>
+
+    <section class="auth-form-panel">
+        <div class="auth-form-inner">
+            <h1 class="display-6 mb-2">Connexion</h1>
+            <p class="text-muted mb-4">Accedez a votre espace en quelques secondes.</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label" for="username">Nom d'utilisateur</label>
+                    <input class="form-control" id="username" type="text" name="username" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input class="form-control" id="password" type="password" name="password" required>
+                </div>
+                <button class="btn btn-primary w-100 py-3" type="submit">Connexion</button>
+            </form>
+
+            <div class="d-flex flex-wrap justify-content-between gap-2 mt-4">
+                <a href="{% url 'register_student' %}">Inscription etudiant</a>
+                <a href="{% url 'register_company' %}">Inscription entreprise</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

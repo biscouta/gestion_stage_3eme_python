@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Mes offres{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Mes offres</h1>
+        <p class="text-muted mb-0">Gerez vos offres et les candidatures recues.</p>
+    </div>
+    <a class="btn btn-primary mt-3 mt-md-0" href="{% url 'create_internship_company' %}">Creer une offre</a>
+</div>
+
+<div class="row g-3">
+    {% for offer in offers %}
+        <div class="col-md-6 col-xl-4">
+            <div class="card offer-card h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between gap-2 mb-2">
+                        <h2 class="h5 mb-0">{{ offer.title }}</h2>
+                        {% if offer.status == 'open' %}
+                            <span class="badge status-badge bg-success">Ouverte</span>
+                        {% else %}
+                            <span class="badge status-badge bg-secondary">Ferm&eacute;e</span>
+                        {% endif %}
+                    </div>
+                    <p class="text-muted small mb-2">{{ offer.domain }} - {{ offer.location }}</p>
+                    <p class="mb-3">{{ offer.description|truncatewords:24 }}</p>
+                    <span class="badge text-bg-light border">{{ offer.get_internship_type_display }}</span>
+                    <span class="badge text-bg-light border">{{ offer.duration }}</span>
+                </div>
+                <div class="card-footer bg-white d-flex flex-wrap gap-2">
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'company_internship_detail' offer.pk %}">Details</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'update_internship_company' offer.pk %}">Modifier</a>
+                    <a class="btn btn-outline-success btn-sm" href="{% url 'company_internship_applications' offer.pk %}">Candidatures</a>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'delete_internship_company' offer.pk %}">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Vous n'avez pas encore cree d'offre.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

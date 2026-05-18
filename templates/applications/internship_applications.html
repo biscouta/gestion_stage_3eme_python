@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Candidatures recues{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-0">Candidatures recues</h1>
+        <p class="text-muted mb-0">{{ offer.title }}</p>
+    </div>
+    <a class="btn btn-outline-secondary mt-3 mt-md-0" href="{% url 'company_internship_list' %}">Mes offres</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Message</th>
+                        <th>CV</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for application in applications %}
+                        <tr>
+                            <td>{{ application.student.profile.full_name|default:application.student.username }}</td>
+                            <td>{{ application.message|truncatewords:12 }}</td>
+                            <td>
+                                {% if application.cv %}
+                                    <a href="{{ application.cv.url }}" target="_blank">Voir</a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>{{ application.created_at|date:'d/m/Y H:i' }}</td>
+                            <td>
+                                {% if application.status == 'accepted' %}
+                                    <span class="badge status-badge bg-success">Accept&eacute;e</span>
+                                {% elif application.status == 'rejected' %}
+                                    <span class="badge status-badge bg-danger">Refus&eacute;e</span>
+                                {% else %}
+                                    <span class="badge status-badge bg-warning text-dark">En attente</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <form method="post" action="{% url 'accept_application_company' application.pk %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-success btn-sm" type="submit">Accepter</button>
+                                    </form>
+                                    <form method="post" action="{% url 'reject_application_company' application.pk %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-danger btn-sm" type="submit">Refuser</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Aucune candidature recue.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

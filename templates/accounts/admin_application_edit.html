@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier candidature{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Modifier candidature</h1>
+        <p class="text-muted mb-0">{{ application.student.profile.full_name|default:application.student.username }} - {{ application.offer.title }}</p>
+    </div>
+    <a class="btn btn-outline-secondary mt-3 mt-md-0" href="{% url 'admin_applications_list' %}">Retour</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="student">Etudiant</label>
+                    <select class="form-select" id="student" name="student" required>
+                        {% for student in students %}
+                            <option value="{{ student.pk }}" {% if student.pk == application.student.pk %}selected{% endif %}>
+                                {{ student.profile.full_name|default:student.username }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="offer">Offre</label>
+                    <select class="form-select" id="offer" name="offer" required>
+                        {% for offer in offers %}
+                            <option value="{{ offer.pk }}" {% if offer.pk == application.offer.pk %}selected{% endif %}>
+                                {{ offer.title }} - {{ offer.company.profile.company_name|default:offer.company.username }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="status">Statut</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="pending" {% if application.status == 'pending' %}selected{% endif %}>En attente</option>
+                        <option value="accepted" {% if application.status == 'accepted' %}selected{% endif %}>Acceptee</option>
+                        <option value="rejected" {% if application.status == 'rejected' %}selected{% endif %}>Rejetee</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="cv">CV</label>
+                    <input class="form-control" id="cv" type="file" name="cv">
+                    {% if application.cv %}
+                        <div class="form-text"><a href="{{ application.cv.url }}" target="_blank">CV actuel</a></div>
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" required>{{ application.message }}</textarea>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                <a class="btn btn-outline-secondary" href="{% url 'admin_applications_list' %}">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

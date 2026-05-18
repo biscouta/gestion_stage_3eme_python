@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Accueil etudiant{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero mb-4">
+    <p class="dashboard-kicker mb-2">Bienvenue sur My Stage</p>
+    <h1 class="display-6 mb-3">Bonjour {{ user.profile.full_name|default:user.username }}</h1>
+    <p class="lead text-muted mb-0">
+        My Stage vous aide a trouver des offres de stage, postuler facilement et suivre l'etat de vos candidatures depuis un seul espace.
+    </p>
+</section>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Recherche d'offres de stage">
+            <div class="card-body">
+                <h2 class="h4">Offres</h2>
+                <p class="text-muted">Consultez les stages disponibles et trouvez une opportunite adaptee a votre profil.</p>
+                <a class="btn btn-primary" href="{% url 'student_internship_list' %}">Voir les offres</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80" alt="Suivi des candidatures">
+            <div class="card-body">
+                <h2 class="h4">Mes candidatures</h2>
+                <p class="text-muted">Suivez vos demandes et voyez rapidement si elles sont en attente, acceptees ou refusees.</p>
+                <a class="btn btn-outline-primary" href="{% url 'student_applications' %}">Voir mes candidatures</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80" alt="Profil etudiant">
+            <div class="card-body">
+                <h2 class="h4">Mon profil</h2>
+                <p class="text-muted">Mettez a jour vos informations, vos competences et votre CV pour attirer les entreprises.</p>
+                <a class="btn btn-outline-secondary" href="{% url 'student_profile' %}">Ouvrir mon profil</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

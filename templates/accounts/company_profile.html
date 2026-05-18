@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil entreprise{% endblock %}
+
+{% block content %}
+<div class="jango-card overflow-hidden">
+    <div class="profile-cover"></div>
+    <div class="card-body px-4 px-md-5 pb-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+            <div>
+                <div class="profile-avatar">{{ profile.company_name|default:user.username|first|upper }}</div>
+                <h1 class="h2 mt-3 mb-1">{{ profile.company_name|default:user.username }}</h1>
+                <p class="profile-meta mb-1">Entreprise ouverte aux jeunes talents</p>
+                <p class="profile-meta mb-0">{{ profile.address|default:'Localisation non specifiee' }} &nbsp; {{ profile.phone|default:'Numero non fourni' }}</p>
+            </div>
+            <div class="pt-md-4">
+                <a class="btn btn-outline-primary" href="{% url 'company_profile_edit' %}">Modifier</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info-card mt-4">
+    <h2 class="h4 mb-3">Secteur</h2>
+    <p class="mb-0">{{ profile.sector|default:'Secteur non renseigne' }}</p>
+</div>
+
+<div class="info-card mt-4">
+    <h2 class="h4 mb-3">Description</h2>
+    <p class="mb-0">{{ profile.description|linebreaksbr|default:'Aucune description renseignee.' }}</p>
+</div>
+{% endblock %}

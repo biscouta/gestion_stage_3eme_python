@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscription entreprise{% endblock %}
+
+{% block content %}
+<div class="jango-card auth-shell">
+    <section class="auth-brand">
+        <div class="auth-brand-content">
+            <div class="auth-logo">
+                <span class="auth-logo-mark">M</span>
+                <div>
+                    <div class="auth-logo-text">My Stage</div>
+                    <div class="auth-tagline">Stages. Talents. Opportunites.</div>
+                </div>
+            </div>
+            <p class="auth-copy mb-0">Publiez vos offres, recevez des candidatures et trouvez de jeunes talents.</p>
+        </div>
+    </section>
+
+    <section class="auth-form-panel">
+        <div class="auth-form-inner">
+            <h1 class="display-6 mb-2">Inscription</h1>
+            <p class="text-muted mb-4">Creez votre compte entreprise en quelques secondes.</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nom d'utilisateur</label>
+                        <input class="form-control" type="text" name="username" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" type="email" name="email">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Mot de passe</label>
+                        <input class="form-control" type="password" name="password" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nom de l'entreprise</label>
+                        <input class="form-control" type="text" name="company_name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Telephone</label>
+                        <input class="form-control" type="text" name="phone">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Secteur</label>
+                        <input class="form-control" type="text" name="sector">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Adresse</label>
+                    <input class="form-control" type="text" name="address">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+                <button class="btn btn-primary w-100 py-3" type="submit">Rejoindre</button>
+                <p class="text-center text-muted mt-3 mb-0">Deja inscrit ? <a href="{% url 'login' %}">Connexion</a></p>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

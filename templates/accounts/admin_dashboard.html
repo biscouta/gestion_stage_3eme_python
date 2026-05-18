@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard admin{% endblock %}
+
+{% block content %}
+<section class="dashboard-hero mb-4">
+    <p class="dashboard-kicker mb-2">Administration</p>
+    <h1 class="display-6 mb-3">Dashboard administrateur</h1>
+    <p class="lead text-muted mb-0">
+        Depuis cette page, l'admin peut afficher, ajouter, modifier et supprimer les utilisateurs, profils, offres et candidatures du site My Stage.
+    </p>
+</section>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="info-card text-center">
+            <div class="h2 mb-1">{{ users_count }}</div>
+            <div class="text-muted fw-semibold">Utilisateurs</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="info-card text-center">
+            <div class="h2 mb-1">{{ profiles_count }}</div>
+            <div class="text-muted fw-semibold">Profils</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="info-card text-center">
+            <div class="h2 mb-1">{{ offers_count }}</div>
+            <div class="text-muted fw-semibold">Offres</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="info-card text-center">
+            <div class="h2 mb-1">{{ applications_count }}</div>
+            <div class="text-muted fw-semibold">Candidatures</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Gestion utilisateurs">
+            <div class="card-body">
+                <h2 class="h4">Utilisateurs</h2>
+                <p class="text-muted">Afficher, ajouter, modifier ou supprimer les comptes.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-primary btn-sm" href="{% url 'admin_users_list' %}">Afficher</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/admin/auth/user/add/">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80" alt="Gestion profils">
+            <div class="card-body">
+                <h2 class="h4">Profils</h2>
+                <p class="text-muted">Gerer les profils etudiants et entreprises.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-primary btn-sm" href="{% url 'admin_profiles_list' %}">Afficher</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/admin/accounts/profile/add/">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80" alt="Gestion offres">
+            <div class="card-body">
+                <h2 class="h4">Offres</h2>
+                <p class="text-muted">Ajouter, modifier ou supprimer les offres de stage.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-primary btn-sm" href="{% url 'admin_offers_list' %}">Afficher</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/admin/internships/internshipoffer/add/">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card dashboard-card">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80" alt="Gestion candidatures">
+            <div class="card-body">
+                <h2 class="h4">Candidatures</h2>
+                <p class="text-muted">Afficher, accepter, refuser, modifier ou supprimer.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-primary btn-sm" href="{% url 'admin_applications_list' %}">Afficher</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/admin/applications/application/add/">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="info-card mt-4">
+    <h2 class="h4 mb-3">Actions disponibles</h2>
+    <p class="text-muted mb-3">
+        Pour modifier ou supprimer une donnee, cliquez sur <strong>Afficher</strong>, choisissez l'element dans la liste Django Admin, puis utilisez les boutons de modification ou suppression.
+    </p>
+    <a class="btn btn-primary" href="/admin/">Ouvrir Django Admin complet</a>
+</div>
+{% endblock %}

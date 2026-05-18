@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Postuler{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="h4 mb-2">Postuler a l'offre</h1>
+        <p class="text-muted">{{ offer.title }} - {{ offer.location }}</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" name="message" rows="5" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">CV</label>
+                <input class="form-control" type="file" name="cv">
+            </div>
+            <button class="btn btn-primary" type="submit">Envoyer la candidature</button>
+            <a class="btn btn-outline-secondary" href="{% url 'student_internship_list' %}">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

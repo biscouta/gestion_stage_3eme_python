@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier entreprise{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="h4 mb-4">Modifier le profil entreprise</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nom de l'entreprise</label>
+                    <input class="form-control" type="text" name="company_name" value="{{ profile.company_name }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Telephone</label>
+                    <input class="form-control" type="text" name="phone" value="{{ profile.phone }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Secteur</label>
+                    <input class="form-control" type="text" name="sector" value="{{ profile.sector }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Adresse</label>
+                    <input class="form-control" type="text" name="address" value="{{ profile.address }}">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="description" rows="4">{{ profile.description }}</textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <a class="btn btn-outline-secondary" href="{% url 'company_profile' %}">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

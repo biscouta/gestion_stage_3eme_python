@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Profils{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+    <div>
+        <h1 class="h3 mb-1">Profils</h1>
+        <p class="text-muted mb-0">Toutes les informations des profils etudiants et entreprises.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2 mt-3 mt-md-0">
+        <a class="btn btn-outline-secondary" href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a class="btn btn-primary" href="/admin/accounts/profile/add/">Ajouter</a>
+    </div>
+</div>
+
+<div class="row g-3">
+    {% for profile in profiles %}
+        <div class="col-lg-6">
+            <div class="info-card h-100">
+                <div class="d-flex justify-content-between gap-2 mb-3">
+                    <div>
+                        <h2 class="h5 mb-1">{{ profile.full_name|default:profile.user.username }}</h2>
+                        <p class="text-muted mb-0">{{ profile.user.username }} - {{ profile.get_role_display }}</p>
+                    </div>
+                    <a class="btn btn-outline-primary btn-sm align-self-start" href="{% url 'admin_profile_edit' profile.pk %}">Modifier</a>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-6"><strong>Email :</strong> {{ profile.user.email|default:'-' }}</div>
+                    <div class="col-md-6"><strong>Telephone :</strong> {{ profile.phone|default:'-' }}</div>
+                    {% if profile.role == 'student' %}
+                        <div class="col-md-6"><strong>Filiere :</strong> {{ profile.field|default:'-' }}</div>
+                        <div class="col-md-6"><strong>Niveau :</strong> {{ profile.study_level|default:'-' }}</div>
+                        <div class="col-12"><strong>Competences :</strong><br>{{ profile.skills|linebreaksbr|default:'-' }}</div>
+                        <div class="col-12">
+                            <strong>CV :</strong>
+                            {% if profile.cv %}
+                                <a href="{{ profile.cv.url }}" target="_blank">Voir le CV</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="col-md-6"><strong>Entreprise :</strong> {{ profile.company_name|default:'-' }}</div>
+                        <div class="col-md-6"><strong>Secteur :</strong> {{ profile.sector|default:'-' }}</div>
+                        <div class="col-12"><strong>Adresse :</strong> {{ profile.address|default:'-' }}</div>
+                        <div class="col-12"><strong>Description :</strong><br>{{ profile.description|linebreaksbr|default:'-' }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Aucun profil.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
